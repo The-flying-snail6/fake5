@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图的实现</title>
+	
+	<style>
+
+		body{
+	font:12px "microsoft yahei",/*微软雅黑*/Arial;/*英文*/
+	color:#666;
+	margin:0;
+			padding:0;
+		}
+		/*具有margin，padding，list-style样式元素效果重置*/
+		ul,dl,dd,p,h1,h2,h3,h4,h5,h6{
+			margin:0;
+			padding:0;
+			list-style:none;/*取消标签*/
+		}
+		input{
+			border:0;
+		}
+		.lf{float:left;}
+		.rt{float:right;}
+		.clear{clear:both;}/*清除浮动*/
+		img{vertical-align:bottom;/*底部对齐*/}
+
+		a{
+			color:#666;
+			text-decoration:none;/*取消下划线*/
+		}
+
+		
+		*{
+			margin:0;
+			padding:0;
+		}
+		#fouc{
+			width:600px;
+			height:360px;
+			margin:50px auto;
+			overflow:hidden;
+			position:relative;
+		}
+		#ul1{
+			list-style:none;
+			width:3000px;
+			height:360px;
+			position:absolute;
+			top:0;
+			left:0;
+			transition:all 0.8s ease;
+		}
+		#ul1 li{
+			float:left;
+		}
+		#ul2{
+			width:600px;
+			height:35px;
+			position:absolute;
+			bottom:0px;
+			left:0px;
+		}
+		#ul2>li{
+			width:113px;
+			height:35px;
+			line-height:35px;
+			background:#111;
+			margin-left:6px;
+			float:left;
+			border-top:3px solid #ddd;
+			box-sizing:border-box;
+			text-align:center;
+			font-family:'黑体';
+		}
+		#ul2 .active{
+			border-top:3px solid #0776D2;
+		}
+		#ul2 .active a{
+			color:#0776D2;
+		}
+
+	</style>
+
+	<script src="jquery-3.2.1.min.js"></script>
+
+	<script>
+		$(function(){
+			var timer=null;
+			var index=0;
+
+			$("#ul1").css({
+				'width':$('#ul1 li:eq(0)').width()*$('#ul1 li').length,
+			})
+
+			$('#ul2 li').mouseover(function(){
+				var index=$(this).index();
+
+				$('#ul1').stop().animate({
+					left:-$('#ul1 li:eq(0)').width()*index
+				},300)
+
+				$('#ul2 li').eq(index).addClass('active').siblings().removeClass('active');
+			})
+
+
+			$('#fouc').hover(function(){
+				clearInterval(timer);
+			},function(){
+				timer=setInterval(function(){
+					index++;
+					if(index==$('#ul1 li').length){
+							index=0;
+					}
+					$('#ul2 li').eq(index).addClass('active').siblings().removeClass('active');
+
+					$('#ul1').stop().animate({
+						left:-$('#ul1 li:eq(0)').width()*index
+					},300)
+
+				},2000)
+			}).trigger('mouseleave')
+
+			
+
+				// oLi2.mouseover(function(){
+				// 	$('#ul2 li').eq(index).addClass('active').siblings().removeClass('active');
+				// })
+			
+		})
+	</script>
+ 
+</head>
+<body>
+	<div id="fouc">
+		<ul id="ul1">
+	    	<li><img src="img/1.jpg" width="600px" height="360px"></li>
+	        <li><img src="img/2.jpg" width="600px" height="360px"></li>
+	        <li><img src="img/3.jpg" width="600px" height="360px"></li>
+	        <li><img src="img/4.jpg" width="600px" height="360px"></li>
+	        <li><img src="img/5.jpg" width="600px" height="360px"></li>
+	    </ul>
+
+	 	<ul id="ul2">
+			<li class="active"><a href="">旅游胜地</a></li>
+			<li><a href="">旅游胜地</a></li>
+			<li><a href="">旅游胜地</a></li>
+			<li><a href="">旅游胜地</a></li>
+			<li><a href="">旅游胜地</a></li>
+			
+		</ul>
+	</div>
+
+
+	
+</body>
+</html>
